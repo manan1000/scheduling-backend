@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(uuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Resource {
+  id                String    @id @default(uuid())
+  name              String
+  email             String    @unique
+  osrCapable        Boolean   @default(false)
+  maxBookingsPerDay Int       @default(1)
+  minGapOverride    Int?      // null = use global default, in hours
+  active            Boolean   @default(true)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  bookings          Booking[]
+}
+
+model Booking {
+  id              String          @id @default(uuid())
+  caseNumber      String
+  environmentType EnvironmentType
+  osrRequired     Boolean         @default(false)
+  startTime       DateTime        // stored in UTC
+  endTime         DateTime        // stored in UTC
+  status          BookingStatus   @default(CONFIRMED)
+  resourceId      String
+  resource        Resource        @relation(fields: [resourceId], references: [id])
+  notes           String?
+  createdBy       String          @default("customer") // "customer" or "admin"
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([startTime, endTime])
+  @@index([resourceId])
+  @@index([caseNumber])
+}
+
+model Holiday {
+  id          String   @id @default(uuid())
+  date        DateTime @unique @db.Date
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model BlockedDay {
+  id        String   @id @default(uuid())
+  dayOfWeek Int      @unique // 0=Sunday, 1=Monday, ... 6=Saturday
+  createdAt DateTime @default(now())
+}
+
+model SchedulingRule {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String   // stored as string, parsed by app
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+enum EnvironmentType {
+  UT
+  PROD
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+}

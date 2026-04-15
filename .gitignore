@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+
+# Prisma Environment & Databases
+.env
+.env.*
+! .env.example
+*.db
+*.db-journal
+
+# Prisma Generated Client (Only if using a custom output path)
+# node_modules/.prisma is already excluded by node_modules/
+# If you use a custom output path, add it here, for example:
+# /src/generated/prisma
+
+# Build and Distribution
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
