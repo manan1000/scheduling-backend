@@ -12,7 +12,7 @@ export async function getAll(req: Request, res: Response, next: NextFunction) {
 
 export async function getById(req: Request, res: Response, next: NextFunction) {
   try {
-    const resource = await resourceService.getResourceById(req.params.id);
+    const resource = await resourceService.getResourceById(req.params.id as string);
     res.json(resource);
   } catch (error) {
     next(error);
@@ -30,7 +30,7 @@ export async function create(req: Request, res: Response, next: NextFunction) {
 
 export async function update(req: Request, res: Response, next: NextFunction) {
   try {
-    const resource = await resourceService.updateResource(req.params.id, req.body);
+    const resource = await resourceService.updateResource(req.params.id as string, req.body);
     res.json(resource);
   } catch (error) {
     next(error);
@@ -39,7 +39,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
 
 export async function remove(req: Request, res: Response, next: NextFunction) {
   try {
-    await resourceService.deleteResource(req.params.id);
+    await resourceService.deleteResource(req.params.id as string);
     res.json({ message: 'Resource removed' });
   } catch (error) {
     next(error);

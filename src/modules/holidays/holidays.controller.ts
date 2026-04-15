@@ -21,7 +21,7 @@ export async function createHoliday(req: Request, res: Response, next: NextFunct
 
 export async function deleteHoliday(req: Request, res: Response, next: NextFunction) {
   try {
-    await holidayService.deleteHoliday(req.params.id);
+    await holidayService.deleteHoliday(req.params.id as string);
     res.json({ message: 'Holiday removed' });
   } catch (error) {
     next(error);
@@ -48,7 +48,7 @@ export async function addBlockedDay(req: Request, res: Response, next: NextFunct
 
 export async function removeBlockedDay(req: Request, res: Response, next: NextFunction) {
   try {
-    await holidayService.removeBlockedDay(req.params.id);
+    await holidayService.removeBlockedDay(req.params.id as string);
     res.json({ message: 'Blocked day removed' });
   } catch (error) {
     next(error);

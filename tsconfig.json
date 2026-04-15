@@ -19,6 +19,6 @@
     },
     "baseUrl": "."
   },
-  "include": ["src/**/*", "../shared/**/*", "prisma/seed.ts"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

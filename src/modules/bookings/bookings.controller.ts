@@ -40,7 +40,7 @@ export async function getAllBookings(req: Request, res: Response, next: NextFunc
 // Admin: get single booking
 export async function getBookingById(req: Request, res: Response, next: NextFunction) {
   try {
-    const booking = await bookingService.getBookingById(req.params.id);
+    const booking = await bookingService.getBookingById(req.params.id as string);
     res.json(booking);
   } catch (error) {
     next(error);
@@ -50,7 +50,7 @@ export async function getBookingById(req: Request, res: Response, next: NextFunc
 // Admin: update booking
 export async function updateBooking(req: Request, res: Response, next: NextFunction) {
   try {
-    const booking = await bookingService.updateBooking(req.params.id, req.body);
+    const booking = await bookingService.updateBooking(req.params.id as string, req.body);
     res.json(booking);
   } catch (error) {
     next(error);
@@ -60,7 +60,7 @@ export async function updateBooking(req: Request, res: Response, next: NextFunct
 // Admin: cancel/delete booking
 export async function deleteBooking(req: Request, res: Response, next: NextFunction) {
   try {
-    await bookingService.deleteBooking(req.params.id);
+    await bookingService.deleteBooking(req.params.id as string);
     res.json({ message: 'Booking cancelled' });
   } catch (error) {
     next(error);

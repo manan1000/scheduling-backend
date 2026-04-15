@@ -16,7 +16,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     if (value === undefined) {
       return res.status(400).json({ error: 'Value is required' });
     }
-    const rule = await rulesService.updateRule(req.params.key, String(value), description);
+    const rule = await rulesService.updateRule(req.params.key as string, String(value), description);
     res.json(rule);
   } catch (error) {
     next(error);
